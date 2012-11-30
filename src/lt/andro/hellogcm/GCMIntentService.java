@@ -6,7 +6,9 @@ package lt.andro.hellogcm;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gcm.GCMBaseIntentService;
 
@@ -27,6 +29,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onError(Context context, String content) {
         Log.d(TAG, "OnError:" + content);
+        AlusVibration.vibrate(context);
     }
 
     /*
@@ -35,8 +38,14 @@ public class GCMIntentService extends GCMBaseIntentService {
      * android.content.Intent)
      */
     @Override
-    protected void onMessage(Context arg0, Intent content) {
+    protected void onMessage(Context context, Intent content) {
+        AlusVibration.vibrate(context);
         Log.d(TAG, "onMessage: " + content);
+        Bundle extras = content.getExtras();
+        String name = extras.getString("NAME");
+        String text = "Name = " + name;
+        Log.d(TAG, text);
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
     }
 
     /*
@@ -45,8 +54,9 @@ public class GCMIntentService extends GCMBaseIntentService {
      * java.lang.String)
      */
     @Override
-    protected void onRegistered(Context arg0, String registrationId) {
+    protected void onRegistered(Context context, String registrationId) {
         Log.d(TAG, "onRegistered: " + registrationId);
+        AlusVibration.vibrate(context);
     }
 
     /*
@@ -55,8 +65,9 @@ public class GCMIntentService extends GCMBaseIntentService {
      * java.lang.String)
      */
     @Override
-    protected void onUnregistered(Context arg0, String content) {
+    protected void onUnregistered(Context context, String content) {
         Log.d(TAG, "onUnregistered: " + content);
+        AlusVibration.vibrate(context);
     }
 
 }
